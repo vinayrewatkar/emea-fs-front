@@ -9,7 +9,16 @@ const Leadershippage = () => {
     <div>
       {/*NAVIGATION BAR*/ }
       <div>
-      <nav style = {{backgroundColor:'black', padding:'1.5em' , display: 'flex', justifyContent: 'space-between', alignItems: 'center',marginBottom: '2em',}}>
+      <nav
+    className="bg-blue-950 text-white px-6 py-4 flex justify-between items-center shadow"
+    style={{
+    padding: '1.5em',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '2em',
+  }}
+>
         <h2 style =  {{color:'white',float:'left',fontWeight:'bold', fontSize:'20'}}>Leadership Team</h2>
 
          <ul style={{ listStyleType: 'none', display: 'flex', gap: '1em', margin: 0, padding: 0 }}>

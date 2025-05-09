@@ -21,7 +21,7 @@
 }
 
 body {
-  background: var(--background);
+  background: #f0f4f8;
   color: var(--foreground);
   font-family: 'Roboto', sans-serif;
 }
