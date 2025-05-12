@@ -7,6 +7,7 @@ import Head from 'next/head';
 
 export default function Home() {
   return (
+
     <>
       <Head>
         <title>EMEA Homepage</title>
@@ -22,10 +23,10 @@ export default function Home() {
           <Link href="/" passHref>
             <button style={styles.navButton}>Home</button>
           </Link>
-          <Link href="/leadership" passHref>
+          <Link href="/pages/LeadershipTeam" passHref>
             <button style={styles.navButton}>Leadership</button>
           </Link>
-          <Link href="/hrcorner" passHref>
+          <Link href="/pages/hrcorner" passHref>
             <button style={styles.navButton}>HR Corner</button>
           </Link>
         </nav>
@@ -50,6 +51,7 @@ export default function Home() {
         </p>
       </main>
     </>
+
   );
 }
 
