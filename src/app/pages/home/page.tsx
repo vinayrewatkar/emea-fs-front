@@ -1,132 +1,69 @@
 'use client';
 
-import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
-import Head from 'next/head';
 
-export default function Home() {
+const Home = () => {
   return (
-    <>
-      
-      
+    <div className="space-y-16">
+      {/* Hero Section */}
+      <section className="relative bg-blue-600 text-white py-24">
+        <div className="absolute inset-0 bg-cover bg-center opacity-30"
+             style={{ backgroundImage: 'url(/path/to/your/hero-image.jpg)' }}></div>
+        <div className="relative container mx-auto text-center">
+          <h1 className="text-4xl font-bold mb-4">Empowering Business Across EMEA</h1>
+          <p className="text-lg mb-6">Delivering insights, strategies, and solutions tailored for Europe, the Middle East, and Africa.</p>
+          <Link href="#services">
+            <a className="inline-block bg-white text-blue-600 py-2 px-6 rounded-full text-lg font-semibold hover:bg-gray-100">Explore Our Services</a>
+          </Link>
+        </div>
+      </section>
 
-      {/* Main Content */}
-      <main style={styles.main}>
-        <section style={styles.intro}>
-          <h1 style={styles.heading}>Welcome to EMEA</h1>
-          <p style={styles.text}>
-            The EMEA (Europe, Middle East, and Africa) region is a diverse and dynamic market that encompasses a wide range of cultures, economies, and business opportunities. Whether you're seeking insights, services, or opportunities tailored to your region, we are here to support your journey.
-          </p>
-        </section>
-        <section style={styles.cta}>
-          <h2 style={styles.ctaHeading}>Get Involved</h2>
-          <p style={styles.ctaText}>
-            Are you ready to take the next step in your professional journey? Sign up for our programs or learn more about leadership in the EMEA region.
-          </p>
-          <div style={styles.ctaButtons}>
-            <Link href="/signup">
-              <button style={styles.ctaButton}>Sign Up</button>
-            </Link>
-            <Link href="/leadership">
-              <button style={{ ...styles.ctaButton, backgroundColor: '#28a745' }}>Learn About Leadership</button>
-            </Link>
+      {/* Overview of Services */}
+      <section id="services" className="container mx-auto px-6">
+        <h2 className="text-3xl font-semibold text-center mb-12">Our Expertise</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="text-center">
+            <Image src="/path/to/strategy-icon.svg" alt="Strategy" width={80} height={80} />
+            <h3 className="text-xl font-semibold mt-4">Strategic Planning</h3>
+            <p className="mt-2">Tailored strategies to navigate the complexities of the EMEA region.</p>
           </div>
-        </section>
-      </main>
-    </>
-  );
-}
+          <div className="text-center">
+            <Image src="/path/to/analytics-icon.svg" alt="Analytics" width={80} height={80} />
+            <h3 className="text-xl font-semibold mt-4">Market Analytics</h3>
+            <p className="mt-2">Data-driven insights to inform decision-making and drive growth.</p>
+          </div>
+          <div className="text-center">
+            <Image src="/path/to/consulting-icon.svg" alt="Consulting" width={80} height={80} />
+            <h3 className="text-xl font-semibold mt-4">Consulting Services</h3>
+            <p className="mt-2">Expert guidance to optimize operations and achieve business objectives.</p>
+          </div>
+        </div>
+      </section>
 
-// Inline styles
-const styles = {
-  main: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 'calc(100vh - 100px)',
-    backgroundColor: '#f0f4f8',
-    padding: '2rem',
-  },
-  intro: {
-    textAlign: 'center' as const,
-    marginBottom: '3rem',
-  },
-  heading: {
-    fontSize: '3rem',
-    color: '#003366',
-    marginBottom: '1rem',
-  },
-  text: {
-    fontSize: '1.25rem',
-    color: '#333',
-    maxWidth: '800px',
-    margin: '0 auto',
-    textAlign: 'center' as const,
-  },
-  services: {
-    width: '100%',
-    textAlign: 'center' as const,
-    marginBottom: '3rem',
-  },
-  subHeading: {
-    fontSize: '2rem',
-    color: '#003366',
-    marginBottom: '1rem',
-  },
-  serviceList: {
-    display: 'flex',
-    justifyContent: 'center',
-    gap: '2rem',
-    flexWrap: 'wrap' as const,
-  },
-  serviceCard: {
-    backgroundColor: '#fff',
-    border: '1px solid #ccc',
-    borderRadius: '8px',
-    padding: '2rem',
-    maxWidth: '250px',
-    textAlign: 'center' as const,
-  },
-  serviceButton: {
-    marginTop: '1rem',
-    padding: '0.5rem 1rem',
-    backgroundColor: '#0055aa',
-    border: 'none',
-    color: '#fff',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    fontSize: '1rem',
-  },
-  cta: {
-    textAlign: 'center' as const,
-    marginTop: '4rem',
-  },
-  ctaHeading: {
-    fontSize: '2.5rem',
-    color: '#003366',
-    marginBottom: '1rem',
-  },
-  ctaText: {
-    fontSize: '1.25rem',
-    color: '#333',
-    maxWidth: '800px',
-    margin: '0 auto',
-    marginBottom: '2rem',
-  },
-  ctaButtons: {
-    display: 'flex',
-    justifyContent: 'center',
-    gap: '1.5rem',
-  },
-  ctaButton: {
-    padding: '0.75rem 2rem',
-    backgroundColor: '#007bff',
-    border: 'none',
-    color: '#fff',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    fontSize: '1.25rem',
-  },
+      {/* Client Testimonials */}
+      <section className="bg-gray-100 py-16">
+        <div className="container mx-auto text-center">
+          <h2 className="text-3xl font-semibold mb-8">What Our Clients Say</h2>
+          <div className="space-y-8">
+            <blockquote className="italic text-lg">"Their insights have been invaluable in navigating the EMEA market."</blockquote>
+            <cite className="text-xl font-semibold">Maher Abouzeid, CEO, GE Healthcare</cite>
+            <blockquote className="italic text-lg">"A trusted partner in our strategic planning and market expansion."</blockquote>
+            <cite className="text-xl font-semibold">Ashraf El Afifi, President, Henkel</cite>
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="bg-blue-600 text-white py-24 text-center">
+        <h2 className="text-3xl font-semibold mb-4">Ready to Transform Your Business?</h2>
+        <p className="text-lg mb-6">Partner with us to unlock new opportunities across the EMEA region.</p>
+        <Link href="/contact">
+          <a className="inline-block bg-white text-blue-600 py-2 px-6 rounded-full text-lg font-semibold hover:bg-gray-100">Contact Us</a>
+        </Link>
+      </section>
+    </div>
+  );
 };
 
+export default Home;
