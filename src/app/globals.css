@@ -19,9 +19,68 @@
     --foreground: #ededed;
   }
 }
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 
-body {
-  background: #f0f4f8;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background);
   color: var(--foreground);
   font-family: 'Roboto', sans-serif;
+  overflow-x: hidden; /* Prevents horizontal scrollbar */
+}
+
+
+/* Make images responsive */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Typewriter animation */
+@keyframes typewriter {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 17ch; 
+  }
+  55% {
+    width: 17ch;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+@keyframes blinkCaret {
+  0%, 100% {
+    border-color: white;
+  }
+  50% {
+    border-color: transparent;
+  }
+}
+
+/* Container that controls typing animation */
+.typewriter-loop {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation: typewriter 9s steps(17, end) infinite;
+}
+
+/* Text including the blinking cursor */
+.typewriter-content {
+  font-family: 'Roboto', sans-serif;
+  font-size: 2rem;
+  color: white;
+  display: inline-block;
+  border-right: 1px solid white; 
+  animation: blinkCaret 0.75s step-end infinite;
 }
