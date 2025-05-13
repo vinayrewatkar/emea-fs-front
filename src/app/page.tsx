@@ -1,18 +1,18 @@
 'use client';
 
 import React from 'react';
-import Image from "next/";
 import Link from 'next/link';
 import Head from 'next/head';
+import Image from 'next/';
 
 export default function Home() {
   return (
-
     <>
       <Head>
         <title>EMEA Homepage</title>
         <meta name="description" content="Welcome to the EMEA regional website." />
       </Head>
+      
 
       {/* Header */}
       <header style={styles.header}>
@@ -31,27 +31,27 @@ export default function Home() {
           </Link>
         </nav>
 
-        {/* Auth Buttons */}
-        <div style={styles.auth}>
-          <Link href="/login" passHref>
-            <button style={styles.authButton}>Login</button>
-          </Link>
-          <Link href="/signup" passHref>
-            <button style={{ ...styles.authButton, backgroundColor: '#28a745' }}>Sign Up</button>
-          </Link>
-        </div>
+       
       </header>
 
       {/* Main Content */}
       <main style={styles.main}>
-        <h1 style={styles.heading}>Welcome to EMEA</h1>
+      <div style={styles.background} />
+      <div style={styles.content}>
+        <h1 className="text-center text-4xl font-mono">
+          <div className="typewriter-loop">
+            <span className="typewriter-content">Welcome to EMEA</span>
+          </div>
+        </h1>
+
+
         <p style={styles.text}>
           The EMEA (Europe, Middle East, and Africa) region covers a vast and diverse market.
           Explore updates, services, and opportunities tailored to your region.
         </p>
+        </div>
       </main>
     </>
-
   );
 }
 
@@ -65,6 +65,8 @@ const styles = {
     backgroundColor: '#003366',
     color: '#fff',
     flexWrap: 'wrap' as const,
+    zIndex: 2,
+    position: 'relative' as const,
   },
   logo: {
     fontSize: '1.8rem',
@@ -99,23 +101,44 @@ const styles = {
     fontSize: '1rem',
   },
   main: {
+    position: 'relative' as const,
+    minHeight: 'calc(100vh - 100px)',
     display: 'flex',
-    flexDirection: 'column' as const,
     alignItems: 'center',
     justifyContent: 'center',
-    height: 'calc(100vh - 100px)',
-    backgroundColor: '#f0f4f8',
     padding: '2rem',
+    overflow: 'hidden',
   },
-  heading: {
-    fontSize: '3rem',
-    color: '#003366',
+  background: {
+    position: 'absolute' as const,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundImage: 'url("/image3.jpg")',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    filter: 'brightness(0.6) blur(1px)',
+    zIndex: 0,
+  },
+  content: {
+    position: 'relative' as const,
+    zIndex: 1,
+    textAlign: 'center' as const,
+    color: 'white',
+    padding: '2rem',
+    maxWidth: '800px',
+  },
+  animatedHeading: {
+    fontSize: '1.25rem',
     marginBottom: '1rem',
+    display: 'inline-block',
+    whiteSpace: 'nowrap',
+    color: '#ffffff',
   },
   text: {
     fontSize: '1.25rem',
-    color: '#333',
-    maxWidth: '600px',
-    textAlign: 'center' as const,
+    color: '#ffffff',
   },
 };
