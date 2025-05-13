@@ -15,24 +15,7 @@ export default function Home() {
       
 
       {/* Header */}
-      <header style={styles.header}>
-        <h2 style={styles.logo}>EMEA</h2>
-
-        {/* Navigation Buttons */}
-        <nav style={styles.nav}>
-          <Link href="/" passHref>
-            <button style={styles.navButton}>Home</button>
-          </Link>
-          <Link href="/pages/LeadershipTeam" passHref>
-            <button style={styles.navButton}>Leadership</button>
-          </Link>
-          <Link href="/pages/hrcorner" passHref>
-            <button style={styles.navButton}>HR Corner</button>
-          </Link>
-        </nav>
-
-       
-      </header>
+      
 
       {/* Main Content */}
       <main style={styles.main}>
