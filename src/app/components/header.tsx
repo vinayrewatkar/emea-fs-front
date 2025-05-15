@@ -20,7 +20,7 @@ const Header = () => {
         {/* Navigation Links */}
         <nav className="hidden md:flex space-x-8">
           <Link href="/" className="text-gray-700 hover:text-blue-600">Home</Link>
-          <Link href="/LeadershipTeam" className="text-gray-700 hover:text-blue-600">Leadership</Link>
+          <Link href="/leadershipteam" className="text-gray-700 hover:text-blue-600">Leadership</Link>
           <Link href="/hrcorner" className="text-gray-700 hover:text-blue-600">HR Corner</Link>
           <Link href="/GenAI" className="text-gray-700 hover:text-blue-600">GenAI</Link>
         </nav>
