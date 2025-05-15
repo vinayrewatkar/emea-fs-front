@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const Header = () => {
   return (
-    <header className="w-full bg-white shadow-md">
+    <header className="sticky top-0 z-50 w-full bg-white shadow-md">
       <div className="max-w-screen-xl mx-auto flex items-center justify-between px-6 py-4">
         {/* Logo */}
         <Link href="/" aria-label="Eureeca">
@@ -21,6 +21,7 @@ const Header = () => {
         <nav className="hidden md:flex space-x-8">
           <Link href="/" className="text-gray-700 hover:text-blue-600">Home</Link>
           <Link href="/LeadershipTeam" className="text-gray-700 hover:text-blue-600">Leadership</Link>
+          <Link href="/KeyClients" className="text-gray-700 hover:text-blue-600">Key-Clients</Link>
           <Link href="/hrcorner" className="text-gray-700 hover:text-blue-600">HR Corner</Link>
           <Link href="/GenAI" className="text-gray-700 hover:text-blue-600">GenAI</Link>
         </nav>
@@ -35,5 +36,3 @@ const Header = () => {
 };
 
 export default Header;
-
-
