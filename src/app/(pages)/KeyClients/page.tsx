@@ -1,21 +1,18 @@
-"use client";
-
+"use client"
 import { useState, useEffect, useMemo } from 'react';
 import { Item } from './../../../types/index';
+import SolutionCard from './components/solutionCard';
+import SolutionSection from './components/solutionSection';
 
-interface Categories {
-  BANKING: Item[];
-  "CAP MKTS": Item[];
-  INSURANCE: Item[];
-  GCC: Item[];
-}
+// Define the categories based on the schema
+type CategoryType = 'BANKING' | 'CAP MKTS' | 'INSURANCE' | 'GCC';
 
 export default function BankingSolutionsPage() {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [query, setQuery] = useState('');
-  const [activeCategory, setActiveCategory] = useState<string>('BANKING');
+  const [activeCategory, setActiveCategory] = useState<CategoryType>('BANKING');
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -25,6 +22,7 @@ export default function BankingSolutionsPage() {
           ? `http://localhost:5000/api/items/search?query=${encodeURIComponent(query)}`
           : 'http://localhost:5000/api/items';
         
+        console.log("Fetching from endpoint:", endpoint);
         const response = await fetch(endpoint);
         
         if (!response.ok) {
@@ -32,6 +30,7 @@ export default function BankingSolutionsPage() {
         }
         
         const data = await response.json();
+        console.log("Received data:", data);
         setItems(data);
       } catch (err) {
         console.error('Error fetching items:', err);
@@ -45,40 +44,62 @@ export default function BankingSolutionsPage() {
     return () => clearTimeout(debounceTimer);
   }, [query]);
 
-  // Group items by category
+  // Group items by their actual type property from the schema
   const categorizedItems = useMemo(() => {
-    const initialCategories: Categories = {
+    const initialCategories: Record<CategoryType, Item[]> = {
       'BANKING': [],
       'CAP MKTS': [],
       'INSURANCE': [],
       'GCC': [],
     };
 
+    // Log items for debugging
+    console.log("Fetched items:", items);
+    
     return items.reduce((acc, item) => {
-      // Simple categorization logic - in a real app, this would come from your database
-      let category = 'BANKING'; // Default category
+      // Use the item's type property for categorization
+      console.log(`Processing item: ${item.title}, type: ${item.type}`);
       
-      if (item.title.toLowerCase().includes('market') || 
-          item.description.toLowerCase().includes('market')) {
-        category = 'CAP MKTS';
-      } else if (item.title.toLowerCase().includes('insurance') || 
-                item.description.toLowerCase().includes('insurance')) {
-        category = 'INSURANCE';
-      } else if (item.title.toLowerCase().includes('uae') || 
-                item.description.toLowerCase().includes('gulf') ||
-                item.title.toLowerCase().includes('saudi')) {
-        category = 'GCC';
+      if (item.type && initialCategories[item.type as CategoryType]) {
+        acc[item.type as CategoryType].push(item);
+      } else {
+        // Fallback in case the type is missing or invalid
+        console.log(`Using fallback category for item: ${item.title}`);
+        acc['BANKING'].push(item);
       }
-      
-      acc[category].push(item);
       return acc;
     }, initialCategories);
   }, [items]);
 
-  // Get recommendations (simple implementation - just showing a few items)
+  // Get recommendations (items from the active category with highest relevance)
   const recommendations = useMemo(() => {
-    return items.slice(0, 3);
-  }, [items]);
+    // In a real app, you might have a relevance score or recently added items
+    // For now, just take the first 3 items from the active category
+    return categorizedItems[activeCategory].slice(0, 3);
+  }, [categorizedItems, activeCategory]);
+
+  // Solution types for different categories
+  const solutionTypes = {
+    'BANKING': ['Cost Optimisation', 'Digital Core', 'Revenue Upliftment', 'Regulations'],
+    'CAP MKTS': ['Trading Solutions', 'Risk Management', 'Market Analysis', 'Compliance'],
+    'INSURANCE': ['Claims Processing', 'Risk Assessment', 'Customer Portals', 'Fraud Detection'],
+    'GCC': ['Islamic Banking', 'Regional Compliance', 'Digital Transformation', 'Customer Experience']
+  };
+
+  // Split category items into subcategories based on solution types
+  const getSectionItems = (category: CategoryType, sectionTitle: string) => {
+    // Instead of slicing by index, display items that match certain criteria
+    // For simplicity in this demo, we'll just return all items in the category
+    // In a real app, you'd have a smarter filter based on item properties
+    
+    console.log(`Getting items for ${category} - ${sectionTitle}. Total items: ${categorizedItems[category].length}`);
+    
+    // Return all items for the first section, none for others to avoid duplicates
+    if (sectionTitle === solutionTypes[category][0]) {
+      return categorizedItems[category];
+    }
+    return [];
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -137,7 +158,7 @@ export default function BankingSolutionsPage() {
         {Object.keys(categorizedItems).map((category) => (
           <button
             key={category}
-            onClick={() => setActiveCategory(category)}
+            onClick={() => setActiveCategory(category as CategoryType)}
             className={`px-6 py-3 text-lg font-medium transition-colors duration-200 ease-in-out ${
               activeCategory === category
                 ? 'text-red-500 border-b-2 border-red-500'
@@ -167,33 +188,25 @@ export default function BankingSolutionsPage() {
       <div className="space-y-12">
         {!loading && (
           <>
-            {/* Cost Optimization Section */}
-            <SolutionSection 
-              title="Cost Optimisation" 
-              iconClass="text-purple-600"
-              items={categorizedItems[activeCategory].slice(0, 3)} 
-            />
+            {/* Debug information */}
+            <div className="bg-gray-100 p-4 mb-6 rounded-md">
+              <p className="font-semibold">Debug Info - Active Category: {activeCategory}</p>
+              <p>Items in this category: {categorizedItems[activeCategory]?.length || 0}</p>
+              {categorizedItems[activeCategory]?.length > 0 && (
+                <div className="mt-2">
+                  <p>First item: {categorizedItems[activeCategory][0]?.title} (Type: {categorizedItems[activeCategory][0]?.type})</p>
+                </div>
+              )}
+            </div>
             
-            {/* Digital Core Section */}
-            <SolutionSection 
-              title="Digital Core" 
-              iconClass="text-purple-600"
-              items={categorizedItems[activeCategory].slice(3, 6)} 
-            />
-            
-            {/* Revenue Upliftment Section */}
-            <SolutionSection 
-              title="Revenue Upliftment" 
-              iconClass="text-purple-600"
-              items={categorizedItems[activeCategory].slice(6, 9)} 
-            />
-            
-            {/* Regulations Section */}
-            <SolutionSection 
-              title="Regulations" 
-              iconClass="text-purple-600"
-              items={categorizedItems[activeCategory].slice(9, 12)} 
-            />
+            {solutionTypes[activeCategory].map((solutionType, index) => (
+              <SolutionSection 
+                key={`${activeCategory}-${solutionType}`}
+                title={solutionType} 
+                iconClass="text-purple-600"
+                items={getSectionItems(activeCategory, solutionType)} 
+              />
+            ))}
           </>
         )}
         
@@ -236,75 +249,5 @@ export default function BankingSolutionsPage() {
         )}
       </div>
     </div>
-  );
-}
-
-// Solution Section Component
-function SolutionSection({ title, iconClass, items }: { title: string; iconClass: string; items: Item[] }) {
-  if (items.length === 0) return null;
-  
-  return (
-    <div className="space-y-4 py-4">
-      <div className="flex items-center space-x-3">
-        <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-          <span className={`${iconClass} text-lg font-bold`}>
-            {title.charAt(0)}
-          </span>
-        </div>
-        <h3 className="text-xl font-semibold text-purple-700">{title}</h3>
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {items.map((item) => (
-          <SolutionCard key={item._id} item={item} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// Solution Card Component
-function SolutionCard({ item }: { item: Item }) {
-  // Map of bank names to their logo paths
-  const bankLogoMap: Record<string, string> = {
-    'Sabadell': '/images/logos/sabadell.png',
-    'NatWest': '/images/logos/natwest.png',
-    'OP-Pohjola': '/images/logos/op-pohjola.png',
-    'Barclays': '/images/logos/barclays.png',
-  };
-  
-  // Extract bank name from title or description
-  const getBankName = () => {
-    const bankNames = Object.keys(bankLogoMap);
-    for (const name of bankNames) {
-      if (item.title.toLowerCase().includes(name.toLowerCase())) {
-        return name;
-      }
-    }
-    return '';
-  };
-  
-  const bankName = getBankName();
-  
-  return (
-    <a href={item.pdfUrl} className="block" target="_blank" rel="noopener noreferrer">
-      <div className="h-full border border-gray-200 rounded-lg p-5 flex flex-col hover:shadow-lg transition-shadow duration-300">
-        <div className="flex items-center mb-3">
-          {/* Bank Logo */}
-          <div className="w-8 h-8 relative mr-3">
-            <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-xs font-bold">
-              {bankName ? bankName.charAt(0) : 'B'}
-            </div>
-          </div>
-          <h3 className="text-lg font-semibold text-gray-800 truncate">
-            {bankName || 'Bank'}
-          </h3>
-        </div>
-        <p className="text-sm text-gray-600 flex-grow">
-          {item.description}
-        </p>
-        <div className="mt-4 text-xs text-blue-600">View Details</div>
-      </div>
-    </a>
   );
 }
